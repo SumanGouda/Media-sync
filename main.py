@@ -3,26 +3,33 @@ from downloader.download_manager import download_playlist
 
 
 def main():
-    print("\n=== YouTube Playlist Downloader ===\n")
+    print("\n=== Media Downloader ===\n")
 
-    # Step 1: Get Playlist URL
-    url = input("Enter YouTube Playlist URL: ").strip()
+    # Step 1: Get Media URL (playlist OR single video)
+    url = input("Enter Media URL: ").strip()
 
-    print("\nExtracting playlist information...\n")
-    playlist_info = get_playlist_info(url)
+    print("\nExtracting media information...\n")
+    media_info = get_playlist_info(url)
 
-    if not playlist_info:
-        print("Failed to extract playlist data.")
+    if not media_info:
+        print("Failed to extract media data.")
         return
 
-    playlist_title = playlist_info.get("title")
-    videos = playlist_info.get("entries", [])
+    media_title = media_info.get("title")
 
-    print(f"Playlist Title: {playlist_title}")
+    # 🔥 Handle Playlist OR Single Video
+    if media_info.get("_type") == "playlist":
+        videos = media_info.get("entries", [])
+        print(f"Playlist detected.")
+    else:
+        videos = [media_info]  # Wrap single video into list
+        print("Single video detected.")
+
+    print(f"Media Title: {media_title}")
     print(f"Total Videos: {len(videos)}\n")
 
     if not videos:
-        print("No videos found in playlist.")
+        print("No videos found.")
         return
 
     # Step 2: Ask Download Type
@@ -71,7 +78,7 @@ def main():
         valid_formats = []
 
         for f in formats:
-            if f.get("vcodec") != "none" and f.get("acodec") != "none":
+            if f.get("vcodec") != "none":
                 format_data = {
                     "format_id": f.get("format_id"),
                     "resolution": f.get("resolution"),
@@ -92,7 +99,7 @@ def main():
 
         selected_format = input("\nEnter format_id you want: ").strip()
 
-        print(f"\nDownloading videos in format {selected_format}...\n")
+        print(f"\nDownloading in format {selected_format}...\n")
 
         download_playlist(
             url=url,
