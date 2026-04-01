@@ -1,7 +1,6 @@
 import yt_dlp
 import os
 
-
 def progress_hook(d):
     if d['status'] == 'downloading':
         percent = d.get('_percent_str', '').strip()

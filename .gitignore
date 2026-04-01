@@ -1,0 +1,32 @@
+# ── Virtual Environment ──────────────────────────
+.venv/
+
+# ── VS Code ──────────────────────────────────────
+.vscode/
+
+# ── Downloads folder (keep folder, ignore contents)
+downloads/*
+!downloads/.gitkeep
+
+# ── Logs ─────────────────────────────────────────
+logs/
+
+# ── Python ───────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ── Egg / Build / Dist ───────────────────────────
+*.egg-info/
+dist/
+build/
+
+# ── Environment variables ─────────────────────────
+.env
+.env.*
+
+# ── OS files ─────────────────────────────────────
+.DS_Store
+Thumbs.db
